@@ -1,6 +1,6 @@
-# SORBONNE_DATA_CHALLENGE_SALTmon_projet/
+# SORBONNE_DATA_CHALLENGE_SALT
 
-Vous y retrouverez :
+**Veuillez trouvez dans ce repo git :**
 
 - L’extraction d’embeddings avec CodeBERT 
 
@@ -12,19 +12,20 @@ Vous y retrouverez :
 
 - La prédiction sur le test et la génération de la soumission 
 
+**Vous trouverez ci-dessous l'oganisation des modules :**
 
-cli (point d'entrée) : en vert
+- cli (point d'entrée) : en vert
 
-domain (logique métier, extraction CodeBERT et features) : en bleu
+- domain (logique métier, extraction CodeBERT et features) : en bleu
 
-infrastructure (gestion des I/O) : en violet
+- infrastructure (gestion des I/O) : en violet
 
-model (modélisation : CodeBERT embedder, TF‑IDF/SVD, classifieur) : en rouge
+- model (modélisation : CodeBERT embedder, TF‑IDF/SVD, classifieur) : en rouge
 
-usecases (orchestration du pipeline : entraînement et prédiction) : en orange
+- usecases (orchestration du pipeline : entraînement et prédiction) : en orange
 
-tests (tests unitaires) : en gris
+- tests (tests unitaires) : en gris
 
-requirements.txt et setup.py (fichiers de configuration) 
+- requirements.txt et setup.py (fichiers de configuration) 
 
 ![Arborescence colorée](./tree.png)
