@@ -25,32 +25,6 @@ usecases (orchestration du pipeline : entraînement et prédiction) : en orange
 
 tests (tests unitaires) : en gris
 
-requirements.txt et setup.py (fichiers de configuration) : en or
-mon_projet/
-├── <span style="color:green;">cli/</span>
-│   ├── <span style="color:green;">__init__.py</span>
-│   └── <span style="color:green;">main.py</span>
-├── <span style="color:blue;">domain/</span>
-│   ├── <span style="color:blue;">__init__.py</span>
-│   ├── <span style="color:blue;">codebert_utils.py</span>
-│   └── <span style="color:blue;">graph_feature_extractor.py</span>
-├── <span style="color:purple;">infrastructure/</span>
-│   ├── <span style="color:purple;">__init__.py</span>
-│   └── <span style="color:purple;">file_io_manager.py</span>
-├── <span style="color:red;">model/</span>
-│   ├── <span style="color:red;">__init__.py</span>
-│   ├── <span style="color:red;">codebert_embedder.py</span>
-│   └── <span style="color:red;">xgb_classifier.py</span>
-├── <span style="color:orange;">usecases/</span>
-│   ├── <span style="color:orange;">__init__.py</span>
-│   ├── <span style="color:orange;">training_pipeline.py</span>
-│   └── <span style="color:orange;">prediction_pipeline.py</span>
-├── <span style="color:gray;">tests/</span>
-│   ├── <span style="color:gray;">__init__.py</span>
-│   ├── <span style="color:gray;">test_codebert_embedder.py</span>
-│   ├── <span style="color:gray;">test_xgb_classifier.py</span>
-│   ├── <span style="color:gray;">test_graph_feature_extractor.py</span>
-│   ├── <span style="color:gray;">test_file_io_manager.py</span>
-│   └── <span style="color:gray;">test_training_pipeline.py</span>
-├── <span style="color:goldenrod;">requirements.txt</span>
-└── <span style="color:goldenrod;">setup.py</span>
+requirements.txt et setup.py (fichiers de configuration) 
+
+![Arborescence colorée](./tree.png)
