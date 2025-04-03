@@ -1,6 +1,7 @@
 import unittest
 from domain.codebert_utils import CodeBERTUtils
 
+
 class TestCodeBERTUtils(unittest.TestCase):
     def test_is_valid_dot_file_invalid(self):
         # On crée un contenu invalide temporairement
@@ -11,5 +12,6 @@ class TestCodeBERTUtils(unittest.TestCase):
         labels = CodeBERTUtils.extract_labels_from_text(dot_text)
         self.assertEqual(labels, ["foo", "bar"])
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

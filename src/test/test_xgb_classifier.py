@@ -2,6 +2,7 @@ import unittest
 import numpy as np
 from model.xgb_classifier import XGBMultiLabelClassifier
 
+
 class TestXGBMultiLabelClassifier(unittest.TestCase):
     def setUp(self):
         self.classifier = XGBMultiLabelClassifier()
@@ -14,5 +15,6 @@ class TestXGBMultiLabelClassifier(unittest.TestCase):
         y_pred = self.classifier.predict(self.X_train)
         self.assertEqual(y_pred.shape, self.y_train.shape)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

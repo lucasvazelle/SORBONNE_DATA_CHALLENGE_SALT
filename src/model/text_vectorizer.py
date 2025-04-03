@@ -2,11 +2,21 @@ import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import TruncatedSVD
 
+
 class TextVectorizer:
     """
     Encapsule la vectorisation du texte par TF-IDF et sa réduction de dimension via SVD.
     """
-    def __init__(self, ngram_range=(1,3), max_features=20000, min_df=3, max_df=0.85, n_components=600, random_state=42):
+
+    def __init__(
+        self,
+        ngram_range=(1, 3),
+        max_features=20000,
+        min_df=3,
+        max_df=0.85,
+        n_components=600,
+        random_state=42,
+    ):
         self.tfidf = TfidfVectorizer(
             ngram_range=ngram_range,
             max_features=max_features,
@@ -14,9 +24,11 @@ class TextVectorizer:
             max_df=max_df,
             sublinear_tf=True,
             use_idf=True,
-            norm='l2'
+            norm="l2",
         )
-        self.svd = TruncatedSVD(n_components=n_components, random_state=random_state, algorithm='arpack')
+        self.svd = TruncatedSVD(
+            n_components=n_components, random_state=random_state, algorithm="arpack"
+        )
 
     def fit_transform(self, texts):
         """

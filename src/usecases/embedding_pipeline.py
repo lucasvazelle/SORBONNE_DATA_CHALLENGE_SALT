@@ -7,11 +7,13 @@ from infrastructure.file_io_manager import FileIOManager
 from domain.codebert_utils import CodeBERTUtils
 from model.codebert_embedder import CodeBERTEmbedder
 
+
 class EmbeddingPipeline:
     """
     Pipeline d'extraction d'embeddings CodeBERT pour un ensemble de graphes.
     Permet de traiter un dossier de fichiers et de sauvegarder les embeddings par batch.
     """
+
     def __init__(self, json_folder, save_dir, batch_size=32):
         self.json_folder = json_folder
         self.save_dir = save_dir
@@ -26,19 +28,27 @@ class EmbeddingPipeline:
         for fname in files:
             if fname.startswith("embedding_"):
                 try:
-                    data = self.io_manager.load_torch(os.path.join(self.save_dir, fname))
+                    data = self.io_manager.load_torch(
+                        os.path.join(self.save_dir, fname)
+                    )
                     all_ids.update(data.get("ids", []))
                 except Exception:
                     continue
         return all_ids
 
-    def encode_graphs_in_size_range(self, min_kb, max_kb, custom_file_list=None, custom_output_name=None):
+    def encode_graphs_in_size_range(
+        self, min_kb, max_kb, custom_file_list=None, custom_output_name=None
+    ):
         embedded_ids = self.get_all_embedded_ids()
         all_files = []
         if custom_file_list:
-            all_files = [(path, os.path.getsize(path)/1024.0) for path in custom_file_list]
+            all_files = [
+                (path, os.path.getsize(path) / 1024.0) for path in custom_file_list
+            ]
         else:
-            for fname in self.io_manager.list_files(self.json_folder, extension=".json"):
+            for fname in self.io_manager.list_files(
+                self.json_folder, extension=".json"
+            ):
                 path = os.path.join(self.json_folder, fname)
                 size_kb = os.path.getsize(path) / 1024.0
                 if min_kb <= size_kb < max_kb:
@@ -59,7 +69,9 @@ class EmbeddingPipeline:
                 with open(path, "r", encoding="utf-8", errors="ignore") as f:
                     dot_text = f.read()
                 labels = self.utils.extract_labels_from_text(dot_text)
-                distinct_payloads = self.utils.extract_distinct_payloads_version_a(labels)
+                distinct_payloads = self.utils.extract_distinct_payloads_version_a(
+                    labels
+                )
                 combined_instr = " ".join(distinct_payloads)[:2560]
                 file_id = os.path.basename(path).replace(".json", "")
                 buffer_instr.append(combined_instr)
@@ -80,10 +92,19 @@ class EmbeddingPipeline:
 
         if embeddings:
             tensor = torch.stack(embeddings)
-            output_name = custom_output_name if custom_output_name else f"embedding_{min_kb}_{max_kb}_KB.pt"
-            self.io_manager.save_torch({'ids': ids, 'embeddings': tensor}, os.path.join(self.save_dir, output_name))
+            output_name = (
+                custom_output_name
+                if custom_output_name
+                else f"embedding_{min_kb}_{max_kb}_KB.pt"
+            )
+            self.io_manager.save_torch(
+                {"ids": ids, "embeddings": tensor},
+                os.path.join(self.save_dir, output_name),
+            )
             print(f"Sauvegarde de {len(ids)} graphes dans {output_name}")
         if failed:
             log_path = os.path.join(self.save_dir, f"log_{min_kb}_{max_kb}_KB.json")
-            self.io_manager.save_json({"failed": failed, "timestamp": datetime.now().isoformat()}, log_path)
+            self.io_manager.save_json(
+                {"failed": failed, "timestamp": datetime.now().isoformat()}, log_path
+            )
             print(f"{len(failed)} erreurs, log sauvegardé dans {log_path}")

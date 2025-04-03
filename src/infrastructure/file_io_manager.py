@@ -5,10 +5,12 @@ import pandas as pd
 import joblib
 import torch
 
+
 class FileIOManager:
     """
     Gère les opérations d'entrée/sortie : lecture et écriture de fichiers CSV, Excel, JSON, Pickle et Torch.
     """
+
     def read_csv(self, filepath, **kwargs):
         return pd.read_csv(filepath, **kwargs)
 

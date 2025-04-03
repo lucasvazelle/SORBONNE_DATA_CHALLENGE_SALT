@@ -2,6 +2,7 @@ import unittest
 from model.text_vectorizer import TextVectorizer
 import numpy as np
 
+
 class TestTextVectorizer(unittest.TestCase):
     def setUp(self):
         self.vectorizer = TextVectorizer(n_components=10)
@@ -18,5 +19,6 @@ class TestTextVectorizer(unittest.TestCase):
         X = self.vectorizer.transform(texts)
         self.assertEqual(X.shape[0], 1)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

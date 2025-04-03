@@ -1,6 +1,7 @@
 import re
 from collections import Counter
 
+
 class CodeBERTUtils:
     @staticmethod
     def is_valid_dot_file(filepath):
@@ -10,7 +11,9 @@ class CodeBERTUtils:
         try:
             with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
                 first_line = f.readline().strip().lower()
-                return bool(first_line) and ("digraph" in first_line or "graph" in first_line)
+                return bool(first_line) and (
+                    "digraph" in first_line or "graph" in first_line
+                )
         except Exception:
             return False
 
@@ -33,8 +36,8 @@ class CodeBERTUtils:
             payload = ":".join(parts[1:]).strip() if len(parts) > 1 else label.strip()
             payload = re.sub(r"[:,\"\[\],]", " ", payload)
             payload = re.sub(r"[^a-zA-Z0-9_\-+*/\\= ]+", " ", payload)
-            payload = re.sub(r"\b0x[0-9a-fA-F]+\b", '', payload)
-            payload = re.sub(r'\b[a-zA-Z]+\s*=\s*0x[0-9a-fA-F]+\b', '', payload)
+            payload = re.sub(r"\b0x[0-9a-fA-F]+\b", "", payload)
+            payload = re.sub(r"\b[a-zA-Z]+\s*=\s*0x[0-9a-fA-F]+\b", "", payload)
             payload = re.sub(r"=", "", payload)
             payload = re.sub(r"[+\-]", "", payload)
             payload = re.sub(r"\s+", " ", payload).strip()

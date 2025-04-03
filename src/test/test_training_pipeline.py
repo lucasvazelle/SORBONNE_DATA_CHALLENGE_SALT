@@ -5,6 +5,7 @@ import pandas as pd
 from unittest.mock import patch
 from usecases.training_pipeline import TrainingPipeline
 
+
 class TestTrainingPipeline(unittest.TestCase):
     def setUp(self):
         # Création d'un CSV temporaire pour les métadonnées
@@ -13,7 +14,7 @@ class TestTrainingPipeline(unittest.TestCase):
         df_train.to_csv(self.train_csv_path, index=False, sep=";")
         # Répertoire temporaire pour les graphes
         self.train_graph_dir = tempfile.TemporaryDirectory()
-        dummy_content = "INST : mov\n\"node1\" -> \"node2\"\n"
+        dummy_content = 'INST : mov\n"node1" -> "node2"\n'
         with open(os.path.join(self.train_graph_dir.name, "dummy.json"), "w") as f:
             f.write(dummy_content)
         # Répertoires pour embeddings et sortie
@@ -28,17 +29,18 @@ class TestTrainingPipeline(unittest.TestCase):
         self.output_dir.cleanup()
 
     def test_run_pipeline(self):
-        with patch('pandas.DataFrame.sample', lambda self, n, random_state: self):
+        with patch("pandas.DataFrame.sample", lambda self, n, random_state: self):
             pipeline = TrainingPipeline(
                 train_csv=self.train_csv_path,
                 train_graph_dir=self.train_graph_dir.name,
                 embedding_dir=self.embedding_dir.name,
                 output_dir=self.output_dir.name,
-                sample_size=1
+                sample_size=1,
             )
             pipeline.run()
             model_path = os.path.join(self.output_dir.name, "xgb_model_full.pkl")
             self.assertTrue(os.path.exists(model_path))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

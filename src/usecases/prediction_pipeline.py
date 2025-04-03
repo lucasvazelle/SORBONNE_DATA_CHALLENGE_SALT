@@ -4,6 +4,7 @@ import joblib
 from infrastructure.file_io_manager import FileIOManager
 from model.xgb_classifier import XGBMultiLabelClassifier
 
+
 class PredictionPipeline:
     """
     Pipeline de prédiction sur le test set :
@@ -11,7 +12,16 @@ class PredictionPipeline:
       - Transformation des textes test
       - Prédiction et génération du fichier de soumission
     """
-    def __init__(self, tfidf_path, svd_path, model_path, test_data_path, submission_template, output_dir):
+
+    def __init__(
+        self,
+        tfidf_path,
+        svd_path,
+        model_path,
+        test_data_path,
+        submission_template,
+        output_dir,
+    ):
         self.tfidf_path = tfidf_path
         self.svd_path = svd_path
         self.model_path = model_path
@@ -29,7 +39,7 @@ class PredictionPipeline:
 
         # Chargement des données test (supposées être un DataFrame sauvegardé en pickle)
         test_df = self.io_manager.load_pickle(self.test_data_path)
-        test_df["text_short"] = test_df["text_cleaned"].str.slice(0, 200000)
+        test_df["text_short"] = test_df["text"].str.slice(0, 200000)
         X_tfidf = vectorizer.transform(test_df["text_short"])
         X_svd = svd.transform(X_tfidf)
         X_test = X_svd  # Fusionnez ici avec d'autres features si nécessaire
@@ -48,10 +58,16 @@ class PredictionPipeline:
         submission_array.insert(0, "name", test_ids_pred)
         missing_ids = set(submission_df["name"].astype(str)) - set(test_ids_pred)
         if missing_ids:
-            zero_df = pd.DataFrame(0, index=range(len(missing_ids)), columns=submission_df.columns)
+            zero_df = pd.DataFrame(
+                0, index=range(len(missing_ids)), columns=submission_df.columns
+            )
             zero_df["name"] = list(missing_ids)
             submission_array = pd.concat([submission_array, zero_df], axis=0)
-        submission_array = submission_array.set_index("name").reindex(submission_df["name"]).reset_index()
+        submission_array = (
+            submission_array.set_index("name")
+            .reindex(submission_df["name"])
+            .reset_index()
+        )
         submission_file = os.path.join(self.output_dir, "submission.xlsx")
         submission_array.to_excel(submission_file, index=False)
         print(f"Fichier de soumission créé : {submission_file}")

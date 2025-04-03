@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 from model.behavior_filler import BehaviorFiller
 
+
 class TestBehaviorFiller(unittest.TestCase):
     def setUp(self):
         # Création d'un DataFrame fictif pour l'entraînement
@@ -11,7 +12,7 @@ class TestBehaviorFiller(unittest.TestCase):
             "id": ["soft1", "soft2", "soft3"],
             "behav1": [1, 0, 1],
             "behav2": [0, 1, 1],
-            "behav3": [1, 1, 0]
+            "behav3": [1, 1, 0],
         }
         self.metadata_train = pd.DataFrame(data)
         # Création d'un exemple de comportement avec des valeurs manquantes (-1)
@@ -29,5 +30,6 @@ class TestBehaviorFiller(unittest.TestCase):
         self.assertNotIn(-1, filled)
         self.assertTrue(isinstance(cluster, int))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -1,6 +1,7 @@
 import unittest
 from model.codebert_embedder import CodeBERTEmbedder
 
+
 class TestCodeBERTEmbedder(unittest.TestCase):
     def setUp(self):
         self.embedder = CodeBERTEmbedder()
@@ -11,5 +12,6 @@ class TestCodeBERTEmbedder(unittest.TestCase):
         self.assertEqual(embeddings.size(0), len(texts))
         self.assertGreater(embeddings.size(1), 0)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -3,13 +3,17 @@ import pandas as pd
 from model.behavior_filler_with_kmeans import BehaviorFiller
 from infrastructure.file_io_manager import FileIOManager
 
+
 class SemiSupervisedFillingPipeline:
     """
     Pipeline pour remplir les valeurs manquantes des comportements logiciels
     à l'aide d'un modèle de clustering (KMeans) et des moyennes des clusters.
     Ici, on ne remplit que les colonnes du TOP 10% ayant le moins de 1 en proportion.
     """
-    def __init__(self, training_metadata_path, prediction_metadata_path, output_dir, n_clusters=3):
+
+    def __init__(
+        self, training_metadata_path, prediction_metadata_path, output_dir, n_clusters=3
+    ):
         self.training_metadata_path = training_metadata_path
         self.prediction_metadata_path = prediction_metadata_path
         self.output_dir = output_dir
@@ -38,7 +42,11 @@ class SemiSupervisedFillingPipeline:
         print(self.filler.cluster_means)
 
         # Remplir uniquement les colonnes identifiées (known_behaviors)
-        results_df = self.filler.fill_dataset(metadata_predict, columns_to_fill=known_behaviors)
-        output_path = os.path.join(self.output_dir, f"metadata_predict_filled_{self.n_clusters}.xlsx")
+        results_df = self.filler.fill_dataset(
+            metadata_predict, columns_to_fill=known_behaviors
+        )
+        output_path = os.path.join(
+            self.output_dir, f"metadata_predict_filled_{self.n_clusters}.xlsx"
+        )
         results_df.to_excel(output_path, index=False)
         print(f"Résultats sauvegardés dans {output_path}")
